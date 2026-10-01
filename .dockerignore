@@ -1,0 +1,6 @@
+.env
+credentials/
+.git
+__pycache__
+.venv
+README.md

@@ -1,0 +1,9 @@
+services:
+  scraper:
+    build: .
+    env_file: .env
+    environment:
+      GOOGLE_CREDENTIALS_FILE: /app/credentials/service_account.json
+    volumes:
+      - ./credentials:/app/credentials:ro   # service account JSON lives here
+      - ./config.yaml:/app/config.yaml:ro   # edit keywords without rebuilding

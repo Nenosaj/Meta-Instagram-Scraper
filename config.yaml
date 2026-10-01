@@ -1,0 +1,74 @@
+# ---------------------------------------------------------------
+# Scraper configuration
+# ---------------------------------------------------------------
+min_views: 50000                 # posts at/above this go to "Viral Content"
+worksheet_name: "Viral Content"
+
+save_not_qualified: true          # everything else goes to a second tab
+not_qualified_worksheet_name: "Not Qualified"
+
+# Free Apify plan returns ~30 results per hashtag no matter the limit,
+# so one round is enough. On a paid plan use e.g. [200, 500, 1000, 2500, 5000]
+result_limit_rounds: [100]
+patience: 2
+max_items_total: 1500
+actor_timeout_secs: 1800
+
+sources:
+  - name: ig_reels
+    enabled: false
+    platform: Instagram
+    actor: apify/instagram-hashtag-scraper
+    keyword_field: hashtags
+    limit_field: resultsLimit
+    input:
+      resultsType: reels
+    keywords: &ig_tags
+      - homebuyertips
+      - homesellertips
+      - firsttimehomebuyer
+      - sellingyourhome
+      - buyingahome
+      - sellyourhome
+      - homebuying
+      - homeselling
+      - realestatetips
+      - realtortips
+      - housingmarket
+      - mortgagetips
+      - sellmyhouse
+      - houseforsale
+      - homeownership
+      - realestateagent
+      - openhouse
+
+  - name: ig_posts
+    enabled: false          # off to save credits; reels have the view counts
+    platform: Instagram
+    actor: apify/instagram-hashtag-scraper
+    keyword_field: hashtags
+    limit_field: resultsLimit
+    input:
+      resultsType: posts
+    keywords: *ig_tags
+
+  - name: fb_hashtags
+    enabled: true          # turn on when you have Apify credit again
+    platform: Facebook
+    actor: apify/facebook-hashtag-scraper
+    keyword_field: keywordList
+    limit_field: resultsLimit
+    input: {}
+    keywords:
+      - homebuyertips
+      - homesellertips
+      - firsttimehomebuyer
+      - sellingyourhome
+      - buyingahome
+      - homebuying
+      - homeselling
+      - realestatetips
+      - sellmyhouse
+      - housingmarket
+      - mortgagetips
+      - realtor
